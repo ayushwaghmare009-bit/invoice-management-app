@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-white rounded-3 shadow-sm">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Welcome to Billing System</h1>
+        <p class="col-md-8 fs-4 text-muted">Manage your customer invoices, track payment status, and review billing details efficiently.</p>
+        <a class="btn btn-primary btn-lg" href="{% url 'invoices' %}" role='bottom'>View Invoices</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow p-4">
+            <h2 class="mb-4 text-center">Register</h2>
+            
+            <form method="post" id="registerForm">
+                {% csrf_token %}
+                
+                <!-- Render standard Django form fields with Bootstrap styling -->
+                {{ form.as_p }}
+
+                <!-- Custom Live Validation Indicators -->
+                <div class="mb-3">
+                    <ul class="list-unstyled small">
+                        <li id="lengthCheck" class="text-danger">❌ Password must be at least 8 characters</li>
+                        <li id="matchCheck" class="text-danger">❌ Passwords must match</li>
+                    </ul>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </form>
+            
+            <p class="mt-3 text-center">Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Live Checkmarks -->
+<script>
+    const passwordField = document.querySelector('input[name="password1"]');
+    const confirmField = document.querySelector('input[name="password2"]');
+    const lengthCheck = document.getElementById('lengthCheck');
+    const matchCheck = document.getElementById('matchCheck');
+
+    function validatePassword() {
+        const pwd = passwordField ? passwordField.value : '';
+        const cpwd = confirmField ? confirmField.value : '';
+
+        // Check length
+        if (pwd.length >= 8) {
+            lengthCheck.textContent = "✅ Password is at least 8 characters";
+            lengthCheck.className = "text-success";
+        } else {
+            lengthCheck.textContent = "❌ Password must be at least 8 characters";
+            lengthCheck.className = "text-danger";
+        }
+
+        // Check match
+        if (pwd.length > 0 && pwd === cpwd) {
+            matchCheck.textContent = "✅ Passwords match";
+            matchCheck.className = "text-success";
+        } else {
+            matchCheck.textContent = "❌ Passwords must match";
+            matchCheck.className = "text-danger";
+        }
+    }
+
+    if (passwordField) passwordField.addEventListener('input', validatePassword);
+    if (confirmField) confirmField.addEventListener('input', validatePassword);
+</script>
+{% endblock %}
