@@ -75,17 +75,16 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-import dj_database_url
 import os
+import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', 'postgresql://postgres:[YOUR-PASSWORD]@[YOUR-HOST]:5432/postgres'),
+        default=f"sqlite:///{os.path.join(BASE_DIR, 'db.sqlite3')}",
         conn_max_age=600,
-        ssl_require=True
+        conn_health_checks_enabled=True,
     )
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
